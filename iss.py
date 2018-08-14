@@ -1,8 +1,7 @@
-#!/bin/python3
-
 import json
 import turtle
 import urllib.request
+import time
 
 url = 'http://api.open-notify.org/iss-now.json'
 response = urllib.request.urlopen(url)
@@ -12,8 +11,10 @@ loc = result['iss_position']
 lat = loc['latitude']
 lon = loc['longitude']
 
+print('Current ISS Position:')
 print('Latitude: ', lat)
 print('Longitude: ', lon)
+print('')
   
 screen = turtle.Screen()
 screen.setup(720, 360)
@@ -39,9 +40,29 @@ location.dot(5)
 location.hideturtle()
 
 #show nest pass over time
-passUrl = 'http://api.open-notify.org/iss-pass.json?lat=', str(latH), '&lon=', str(lonH)
+passUrl = 'http://api.open-notify.org/iss-pass.json?lat=' + str(latH) + '&lon=' + str(lonH)
 response = urllib.request.urlopen(passUrl)
 result2 = json.loads(response.read())
 
 passover = result2['response'][1]['risetime']
-print(passover)
+print('Current time is:')
+print(time.ctime(time.time()))
+
+print('Next passover time will be:')
+print(time.ctime(passover))
+
+#display passover time on map
+style = ('Arial', 6, 'bold')
+location.write(time.ctime(passover), font=style)
+
+ttp = passover - time.time()
+
+timeTillPass = int((ttp - (ttp % 3600)) / 3600)
+timeTillPassMin = int((ttp - (timeTillPass * 3600)) / 60)
+#time left
+ct = turtle.Turtle()
+ct.penup()
+ct.color('lawn green')
+ct.goto (-170, -70)
+ct.write(str(timeTillPass) + ' hr, ' + str(timeTillPassMin) + ' min', font=style)
+ct.hideturtle()
