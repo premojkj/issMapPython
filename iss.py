@@ -27,3 +27,13 @@ iss.setheading(90)
 
 iss.penup()
 iss.goto(lon, lat)
+
+#Home dot
+latH = 51.643769
+lonH = -2.685062
+location = turtle.Turtle()
+location.penup()
+location.color('yellow')
+location.goto(lonH, latH)
+location.dot(5)
+location.hideturtle()
