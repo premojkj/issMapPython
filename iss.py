@@ -37,3 +37,11 @@ location.color('yellow')
 location.goto(lonH, latH)
 location.dot(5)
 location.hideturtle()
+
+#show nest pass over time
+passUrl = 'http://api.open-notify.org/iss-pass.json?lat=', str(latH), '&lon=', str(lonH)
+response = urllib.request.urlopen(passUrl)
+result2 = json.loads(response.read())
+
+passover = result2['response'][1]['risetime']
+print(passover)
