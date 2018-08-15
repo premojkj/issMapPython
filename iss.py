@@ -1,3 +1,5 @@
+#!/bin/python3
+
 import json
 import turtle
 import urllib.request
@@ -21,9 +23,9 @@ screen.setup(720, 360)
 screen.setworldcoordinates(-180, -90, 180, 90)
 screen.bgpic('map.jpg')
 
-screen.register_shape('iss2.png')
+screen.register_shape('iss.png')
 iss = turtle.Turtle()
-iss.shape('iss2.png')
+iss.shape('iss.png')
 iss.setheading(90)
 
 iss.penup()
@@ -47,13 +49,19 @@ result2 = json.loads(response.read())
 passover = result2['response'][1]['risetime']
 print('Current time is:')
 print(time.ctime(time.time()))
-
 print('Next passover time will be:')
 print(time.ctime(passover))
+passover2 = result2['response'][2]['risetime']
 
 #display passover time on map
 style = ('Arial', 6, 'bold')
 location.write(time.ctime(passover), font=style)
+nt = turtle.Turtle()
+nt.penup()
+nt.color('lawn green')
+nt.goto (75, -60)
+nt.write(time.ctime(passover2), font=style)
+nt.hideturtle()
 
 ttp = passover - time.time()
 
